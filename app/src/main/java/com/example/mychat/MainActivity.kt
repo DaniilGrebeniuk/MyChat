@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
             AppNavGraph(
                 navController = navController,
                 loginVm = Injection.loginViewModel(),
-                registerVm = Injection.registerViewModel()
+                registerVm = Injection.registerViewModel(),
 
             )
         }

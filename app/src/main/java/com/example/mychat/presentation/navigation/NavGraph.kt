@@ -1,22 +1,30 @@
 package com.example.mychat.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
+import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.mychat.presentation.chat.USerScreen
+import androidx.navigation.navArgument
+import com.example.mychat.di.Injection
+import com.example.mychat.presentation.chat.ChatScreen
+import com.example.mychat.presentation.users.UserScreen
 import com.example.mychat.presentation.login.LoginScreen
 import com.example.mychat.presentation.login.LoginViewModel
 import com.example.mychat.presentation.registration.RegisterScreen
 import com.example.mychat.presentation.registration.RegisterViewModel
+import com.example.mychat.presentation.users.UsersViewModel
 
 @Composable
 fun AppNavGraph(
     navController: NavHostController,
     loginVm: LoginViewModel,
-    registerVm: RegisterViewModel
-) {
+    registerVm: RegisterViewModel,
+
+
+    ) {
     NavHost(
         navController = navController,
         startDestination = Screen.Login.route
@@ -24,7 +32,7 @@ fun AppNavGraph(
         composable(Screen.Login.route) {
             LoginScreen(
                 vm = loginVm,
-                onSuccess = {navController.navigate(Screen.User.route)},
+                onSuccess = { navController.navigate(Screen.User.route) },
                 onRegisterClick = {
                     navController.navigate(Screen.Register.route)
                 }
@@ -39,8 +47,14 @@ fun AppNavGraph(
                 }
             )
         }
-        composable(Screen.User.route){
-            USerScreen()
+        composable(Screen.User.route) {
+            UserScreen(
+                navController = navController,
+            )
         }
+        composable(Screen.Chat.route,
+            arguments = listOf(navArgument("userId"){type = NavType.IntType})
+            ) { ChatScreen() }
+
     }
 }
