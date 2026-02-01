@@ -11,12 +11,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.example.mychat.di.Injection
+import com.example.mychat.domain.usercase.LoginUseCase
+import com.example.mychat.presentation.login.LoginViewModel
+import com.example.mychat.presentation.navigation.AppNavGraph
 import com.example.mychat.ui.theme.MyChatTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
+            AppNavGraph(
+                navController = navController,
+                loginVm = Injection.loginViewModel(),
+                registerVm = Injection.registerViewModel()
+
+            )
         }
     }
 }
